@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cp_search_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:gravity="center_vertical"
-    android:padding="16dp"
-    tools:showIn="@layout/cp_dialog_city_picker">
-
-    <EditText
-        android:id="@+id/cp_search_box"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@null"
-        android:hint="?attr/cpSearchHintText"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:textCursorDrawable="?attr/cpSearchCursorDrawable"
-        android:textColor="?attr/cpSearchTextColor"
-        android:textColorHint="?attr/cpSearchHintTextColor"
-        android:textSize="?attr/cpSearchTextSize" />
+    android:layout_height="56dp"
+    android:padding="@dimen/margin8"
+    android:background="@color/cp_colorPrimary">
 
     <ImageView
-        android:id="@+id/cp_clear_all"
-        android:layout_width="20dp"
-        android:layout_height="match_parent"
-        android:padding="2dp"
+        android:id="@+id/img_back"
         android:visibility="gone"
-        android:scaleType="fitCenter"
-        android:src="?attr/cpClearTextIcon" />
-
-    <Space
-        android:layout_width="6dp"
-        android:layout_height="match_parent" />
-
-    <View
-        android:layout_width="1px"
-        android:layout_height="14dp"
-        android:background="@color/cp_color_gray_light"/>
-
-    <Space
-        android:layout_width="16dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/margin8"
+        android:src="@mipmap/cp_icon_clear_all" />
 
     <TextView
         android:id="@+id/cp_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cp_cancel"
-        android:textColor="?attr/cpCancelTextColor"
-        android:textSize="?attr/cpCancelTextSize" />
-</LinearLayout>
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/margin8"
+        android:text="@string/cancle"
+        android:textColor="@color/white"
+        android:textSize="@dimen/margin16" />
+
+    <EditText
+        android:id="@+id/cp_search_box"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin32"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_toLeftOf="@id/cp_cancel"
+        android:layout_toRightOf="@+id/img_back"
+        android:background="@drawable/edt_backgrund"
+        android:drawableLeft="@mipmap/search"
+        android:hint="@string/search"
+        android:paddingLeft="@dimen/margin8"
+        android:textSize="@dimen/margin16" />
+
+</RelativeLayout>
+
