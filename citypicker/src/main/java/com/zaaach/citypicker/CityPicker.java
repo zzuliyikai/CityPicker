@@ -1,9 +1,14 @@
 package com.zaaach.citypicker;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.os.Build;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.LocateState;

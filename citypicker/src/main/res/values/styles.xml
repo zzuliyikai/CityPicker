@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/cp_colorPrimary</item>
+        <item name="colorPrimary">@color/cp_colorAccent</item>
         <item name="colorPrimaryDark">@color/cp_colorPrimaryDark</item>
         <item name="colorAccent">@color/cp_colorAccent</item>
     </style>
@@ -21,6 +21,8 @@
         <item name="android:backgroundDimEnabled">true</item>
         <!--是否半透明 -->
         <item name="android:windowIsTranslucent">true</item>
+        <item name="colorPrimary">@color/cp_colorAccent</item>
+        <item name="colorPrimaryDark">@color/cp_colorPrimaryDark</item>
     </style>
     
     <style name="DefaultCityPickerAnimation" parent="@android:style/Animation">
