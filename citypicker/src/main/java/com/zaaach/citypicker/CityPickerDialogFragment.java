@@ -48,7 +48,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     private SideIndexBar mIndexBar;
     private EditText mSearchBox;
     private TextView mCancelBtn;
-    private ImageView mClearAllBtn;
+
 
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
@@ -171,9 +171,8 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         mSearchBox.addTextChangedListener(this);
 
         mCancelBtn = mContentView.findViewById(R.id.cp_cancel);
-        mClearAllBtn = mContentView.findViewById(R.id.cp_clear_all);
+
         mCancelBtn.setOnClickListener(this);
-        mClearAllBtn.setOnClickListener(this);
 
         return mContentView;
     }
@@ -205,13 +204,11 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     public void afterTextChanged(Editable s) {
         String keyword = s.toString();
         if (TextUtils.isEmpty(keyword)){
-            mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
             mResults = mAllCities;
             ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             mAdapter.updateData(mResults);
         }else {
-            mClearAllBtn.setVisibility(View.VISIBLE);
             //开始数据库查找
             mResults = dbManager.searchCity(keyword);
             ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
@@ -230,8 +227,6 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         int id = v.getId();
         if (id == R.id.cp_cancel) {
             dismiss(-1, null);
-        }else if(id == R.id.cp_clear_all){
-            mSearchBox.setText("");
         }
     }
 
