@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zaaach.citypicker.CityPicker;
+import com.zaaach.citypicker.CityPickerPopup;
 import com.zaaach.citypicker.adapter.CityListAdapter;
 import com.zaaach.citypicker.adapter.InnerListener;
 import com.zaaach.citypicker.adapter.OnPickListener;
@@ -74,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         enableCB = findViewById(R.id.cb_enable_anim);
         themeBtn = findViewById(R.id.btn_style);
         btnPop = findViewById(R.id.btn_pop);
-        if (theme == R.style.DefaultCityPickerTheme){
+        if (theme == R.style.DefaultCityPickerTheme) {
             themeBtn.setText("默认主题");
-        }else if (theme == R.style.CustomTheme){
+        } else if (theme == R.style.CustomTheme) {
             themeBtn.setText("自定义主题");
         }
 
@@ -86,19 +87,19 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         btnPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopWindow();
+                // showPopWindow();
+                CityPickerPopup.getInstance().getCityPopupwindow(MainActivity.this, btnPop);
             }
         });
-
 
 
         themeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (themeBtn.getText().toString().startsWith("自定义")){
+                if (themeBtn.getText().toString().startsWith("自定义")) {
                     themeBtn.setText("默认主题");
                     theme = R.style.DefaultCityPickerTheme;
-                }else if (themeBtn.getText().toString().startsWith("默认")){
+                } else if (themeBtn.getText().toString().startsWith("默认")) {
                     themeBtn.setText("自定义主题");
                     theme = R.style.CustomTheme;
                 }
@@ -152,26 +153,26 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         int h = btnPop.getHeight();
 
 
-
         WindowManager windowManager = this.getWindowManager();
         Display defaultDisplay = windowManager.getDefaultDisplay();
         int height1 = defaultDisplay.getHeight();
-        Log.d("yikai", "y = " +y+"  h = "+h +" height1=" +height1);
-        int hight = (int) (height1 - y -h - 500);
+        Log.d("yikai", "y = " + y + "  h = " + h + " height1=" + height1);
+        int hight = (int) (height1 - y - h - 500);
         mPopupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, hight, true);
-       //设置popuwindow外部可以点击
+        //设置popuwindow外部可以点击
         mPopupWindow.setOutsideTouchable(true);
-       //popuwindow里填充的listView拥有焦点
+        //popuwindow里填充的listView拥有焦点
         mPopupWindow.setFocusable(true);
         initView(contentView);
         initData(contentView);
         mPopupWindow.setBackgroundDrawable(this.getResources().getDrawable(R.color.cp_color_grid_item_bg));
         mPopupWindow.setContentView(contentView);
         //popupWindow.showAtLocation(btnPop, Gravity.BOTTOM, 0, 100);
-        mPopupWindow.showAsDropDown(btnPop,0,5);
+        mPopupWindow.showAsDropDown(btnPop, 0, 5);
 
     }
+
     private View mContentView;
     private RecyclerView mRecyclerView;
     private View mEmptyView;
@@ -194,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     private LocatedCity mLocatedCity;
     private int locateState;
     private OnPickListener mOnPickListener;
+
     private void initView(View mContentView) {
         initHotCities();
         initLocatedCity();
@@ -217,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 //确保定位城市能正常刷新
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mAdapter.refreshLocationItem();
                 }
             }
@@ -234,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         mSearchBox.addTextChangedListener(this);
 
         mCancelBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_cancel);
-        mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
+        //       mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
         mCancelBtn.setOnClickListener(this);
-        mClearAllBtn.setOnClickListener(this);
+        //       mClearAllBtn.setOnClickListener(this);
 
 
     }
@@ -257,10 +259,10 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     }
 
     private void initLocatedCity() {
-        if (mLocatedCity == null){
+        if (mLocatedCity == null) {
             mLocatedCity = new LocatedCity(getString(com.zaaach.citypicker.R.string.cp_locating), "未知", "0");
             locateState = LocateState.FAILURE;
-        }else{
+        } else {
             locateState = LocateState.SUCCESS;
         }
     }
@@ -272,16 +274,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.cb_hot:
-                if (isChecked){
+                if (isChecked) {
                     hotCities = new ArrayList<>();
                     hotCities.add(new HotCity("北京", "北京", "101010100"));
                     hotCities.add(new HotCity("上海", "上海", "101020100"));
                     hotCities.add(new HotCity("广州", "广东", "101280101"));
                     hotCities.add(new HotCity("深圳", "广东", "101280601"));
                     hotCities.add(new HotCity("杭州", "浙江", "101210101"));
-                }else {
+                } else {
                     hotCities = null;
                 }
                 break;
@@ -303,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     @Override
     public void dismiss(int position, City data) {
 
-        Toast.makeText(this,""+data.getName(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "" + data.getName(), Toast.LENGTH_LONG).show();
         mPopupWindow.dismiss();
     }
 
@@ -331,20 +333,20 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     @Override
     public void afterTextChanged(Editable s) {
         String keyword = s.toString();
-        if (TextUtils.isEmpty(keyword)){
+        if (TextUtils.isEmpty(keyword)) {
             mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
             mResults = mAllCities;
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             mAdapter.updateData(mResults);
-        }else {
+        } else {
             mClearAllBtn.setVisibility(View.VISIBLE);
             //开始数据库查找
             mResults = dbManager.searchCity(keyword);
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
-            if (mResults == null || mResults.isEmpty()){
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            if (mResults == null || mResults.isEmpty()) {
                 mEmptyView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mEmptyView.setVisibility(View.GONE);
                 mAdapter.updateData(mResults);
             }
@@ -357,8 +359,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         int id = v.getId();
         if (id == com.zaaach.citypicker.R.id.cp_cancel) {
             dismiss(-1, null);
-        }else if(id == com.zaaach.citypicker.R.id.cp_clear_all){
-            mSearchBox.setText("");
         }
     }
 }
