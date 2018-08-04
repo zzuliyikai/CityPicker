@@ -87,8 +87,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         btnPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // showPopWindow();
-                CityPickerPopup.getInstance().getCityPopupwindow(MainActivity.this, btnPop);
+                //设置当前已经获取到的位置
+                CityPickerPopup.getInstance().getCurrentLocal("","","");
+                CityPickerPopup.getInstance().getCityPopupwindow(MainActivity.this, btnPop, new CityPickerPopup.ISelectCityListener() {
+                    @Override
+                    public void selectedCityListener(City city) {
+
+                        Toast.makeText(MainActivity.this, ""+city.getName(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
 
@@ -236,9 +244,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         mSearchBox.addTextChangedListener(this);
 
         mCancelBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_cancel);
-        //       mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
+              mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
         mCancelBtn.setOnClickListener(this);
-        //       mClearAllBtn.setOnClickListener(this);
+             mClearAllBtn.setOnClickListener(this);
 
 
     }
@@ -361,4 +369,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             dismiss(-1, null);
         }
     }
+
+
+
 }

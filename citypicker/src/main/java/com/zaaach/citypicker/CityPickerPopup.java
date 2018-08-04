@@ -30,6 +30,7 @@ import com.zaaach.citypicker.view.SideIndexBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2018/8/2.
@@ -53,9 +54,9 @@ public class CityPickerPopup {
     private List<City> mAllCities;
     private List<HotCity> mHotCities;
     private List<City> mResults;
-
+    private ImageView mClearAllBtn;
     private DBManager dbManager;
-
+    private ISelectCityListener mListener;
     private boolean enableAnim = false;
     private int mAnimStyle = com.zaaach.citypicker.R.style.DefaultCityPickerAnimation;
     private LocatedCity mLocatedCity;
@@ -63,14 +64,14 @@ public class CityPickerPopup {
     private OnPickListener mOnPickListener;
 
 
-    private CityPickerPopup(){
+    private CityPickerPopup() {
 
     }
 
-    public static CityPickerPopup getInstance(){
-        if (mCityPickerPopup == null){
-            synchronized (CityPickerPopup.class){
-                if (mCityPickerPopup == null){
+    public static CityPickerPopup getInstance() {
+        if (mCityPickerPopup == null) {
+            synchronized (CityPickerPopup.class) {
+                if (mCityPickerPopup == null) {
                     mCityPickerPopup = new CityPickerPopup();
                 }
             }
@@ -79,8 +80,9 @@ public class CityPickerPopup {
     }
 
 
-    public void getCityPopupwindow(Context context,View view){
+    public void getCityPopupwindow(Context context, View view, ISelectCityListener listener) {
         this.mContext = context;
+        this.mListener = listener;
         mPopupWindow = new PopupWindow();
 
         View contentView = LayoutInflater.from(context).inflate(R.layout.cp_dialog_city_picker, null);
@@ -96,12 +98,11 @@ public class CityPickerPopup {
         initView();
         mPopupWindow.setBackgroundDrawable(context.getResources().getDrawable(R.color.cp_color_grid_item_bg));
         mPopupWindow.setContentView(contentView);
-        mPopupWindow.showAsDropDown(view,0,5);
+        mPopupWindow.showAsDropDown(view, 0, 5);
     }
 
     private void initView() {
         initHotCities();
-        initLocatedCity();
 
         dbManager = new DBManager(mContext);
         mAllCities = dbManager.getAllCities();
@@ -119,6 +120,13 @@ public class CityPickerPopup {
             @Override
             public void dismiss(int position, City data) {
 
+                if (mListener != null) {
+
+                    mListener.selectedCityListener(data);
+
+
+                }
+
             }
 
             @Override
@@ -132,7 +140,7 @@ public class CityPickerPopup {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 //确保定位城市能正常刷新
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mAdapter.refreshLocationItem();
                 }
             }
@@ -146,6 +154,7 @@ public class CityPickerPopup {
                 .setOnIndexChangedListener(new SideIndexBar.OnIndexTouchedChangedListener() {
                     @Override
                     public void onIndexChanged(String index, int position) {
+
 
                     }
                 });
@@ -173,7 +182,7 @@ public class CityPickerPopup {
         mCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPopupWindow.dismiss();
             }
         });
 
@@ -194,14 +203,17 @@ public class CityPickerPopup {
         }
 
     }
-    private void initLocatedCity() {
 
-        if (mLocatedCity == null){
-            mLocatedCity = new LocatedCity(mContext.getResources().getString(com.zaaach.citypicker.R.string.cp_locating), "未知", "0");
-            locateState = LocateState.FAILURE;
-        }else{
-            locateState = LocateState.SUCCESS;
-        }
+    //设置当前位置
+    public void getCurrentLocal(String city, String province, String code) {
+        mLocatedCity = new LocatedCity(city, province, code);
+        locateState = LocateState.SUCCESS;
+
     }
 
+    public interface ISelectCityListener {
+
+        void selectedCityListener(City city);
+
+    }
 }
