@@ -6,12 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -31,7 +28,6 @@ import com.zaaach.citypicker.view.SideIndexBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by Administrator on 2018/8/2.
@@ -63,6 +59,7 @@ public class CityPickerPopup {
     private LocatedCity mLocatedCity;
     private int locateState;
     private OnPickListener mOnPickListener;
+    private IOnDismissListener mOnDismissListener;
 
 
     private CityPickerPopup() {
@@ -206,6 +203,15 @@ public class CityPickerPopup {
             }
         });
 
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (mOnDismissListener != null){
+                    mOnDismissListener.onDismiss();
+                }
+            }
+        });
+
     }
 
     private void initHotCities() {
@@ -231,9 +237,18 @@ public class CityPickerPopup {
 
     }
 
+    public void setOnDismissListener(IOnDismissListener onDismissListener){
+        this.mOnDismissListener = onDismissListener;
+    }
+
     public interface ISelectCityListener {
 
         void selectedCityListener(City city);
 
+    }
+
+    public interface IOnDismissListener{
+
+        void onDismiss();
     }
 }
