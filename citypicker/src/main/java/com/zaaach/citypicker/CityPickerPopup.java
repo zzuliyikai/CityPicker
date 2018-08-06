@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
@@ -124,7 +125,7 @@ public class CityPickerPopup {
 
                     mListener.selectedCityListener(data);
 
-
+                    mPopupWindow.dismiss();
                 }
 
             }
@@ -154,7 +155,8 @@ public class CityPickerPopup {
                 .setOnIndexChangedListener(new SideIndexBar.OnIndexTouchedChangedListener() {
                     @Override
                     public void onIndexChanged(String index, int position) {
-
+                        //滚动RecyclerView到索引位置
+                        mAdapter.scrollToSection(index);
 
                     }
                 });
@@ -173,6 +175,24 @@ public class CityPickerPopup {
 
             @Override
             public void afterTextChanged(Editable s) {
+                String keyword = s.toString();
+                if (TextUtils.isEmpty(keyword)){
+                    mEmptyView.setVisibility(View.GONE);
+                    mResults = mAllCities;
+                    ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+                    mAdapter.updateData(mResults);
+                }else {
+                    //开始数据库查找
+                    mResults = dbManager.searchCity(keyword);
+                    ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+                    if (mResults == null || mResults.isEmpty()){
+                        mEmptyView.setVisibility(View.VISIBLE);
+                    }else {
+                        mEmptyView.setVisibility(View.GONE);
+                        mAdapter.updateData(mResults);
+                    }
+                }
+                mRecyclerView.scrollToPosition(0);
 
             }
         });

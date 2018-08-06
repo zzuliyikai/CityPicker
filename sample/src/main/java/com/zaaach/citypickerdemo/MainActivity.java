@@ -244,9 +244,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         mSearchBox.addTextChangedListener(this);
 
         mCancelBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_cancel);
-              mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
+      //        mClearAllBtn = mContentView.findViewById(com.zaaach.citypicker.R.id.cp_clear_all);
         mCancelBtn.setOnClickListener(this);
-             mClearAllBtn.setOnClickListener(this);
+     //        mClearAllBtn.setOnClickListener(this);
 
 
     }
