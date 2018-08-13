@@ -20,7 +20,6 @@ import java.util.List;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_CODE;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_NAME;
 import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_PINYIN;
-import static com.zaaach.citypicker.db.DBConfig.COLUMN_C_PROVINCE;
 import static com.zaaach.citypicker.db.DBConfig.LATEST_DB_NAME;
 import static com.zaaach.citypicker.db.DBConfig.DB_NAME_V1;
 import static com.zaaach.citypicker.db.DBConfig.TABLE_NAME;
@@ -81,10 +80,9 @@ public class DBManager {
         City city;
         while (cursor.moveToNext()){
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
-            String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
             String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
-            city = new City(name, province, pinyin, code);
+            city = new City(name, "", pinyin, code);
             result.add(city);
         }
         cursor.close();
@@ -103,10 +101,9 @@ public class DBManager {
         List<City> result = new ArrayList<>();
         while (cursor.moveToNext()){
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
-            String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
             String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
             String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
-            City city = new City(name, province, pinyin, code);
+            City city = new City(name, "", pinyin, code);
             result.add(city);
         }
         cursor.close();

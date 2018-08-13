@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                     @Override
                     public void selectedCityListener(City city) {
 
-                        Toast.makeText(MainActivity.this, ""+city.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, ""+city.getName()+" "+city.getCode()+"   "+city.getProvince(), Toast.LENGTH_SHORT).show();
 
                     }
                 });

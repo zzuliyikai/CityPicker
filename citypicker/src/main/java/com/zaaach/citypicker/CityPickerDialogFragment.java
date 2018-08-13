@@ -109,15 +109,15 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     private void initHotCities() {
         if (mHotCities == null || mHotCities.isEmpty()) {
             mHotCities = new ArrayList<>();
-            mHotCities.add(new HotCity("北京", "北京", "101010100"));
-            mHotCities.add(new HotCity("上海", "上海", "101020100"));
-            mHotCities.add(new HotCity("广州", "广东", "101280101"));
-            mHotCities.add(new HotCity("深圳", "广东", "101280601"));
-            mHotCities.add(new HotCity("天津", "天津", "101030100"));
-            mHotCities.add(new HotCity("杭州", "浙江", "101210101"));
-            mHotCities.add(new HotCity("南京", "江苏", "101190101"));
-            mHotCities.add(new HotCity("成都", "四川", "101270101"));
-            mHotCities.add(new HotCity("武汉", "湖北", "101200101"));
+            mHotCities.add(new HotCity("北京", "北京", "110100"));
+            mHotCities.add(new HotCity("上海", "上海", "310100"));
+            mHotCities.add(new HotCity("广州", "广东", "440100"));
+            mHotCities.add(new HotCity("深圳", "广东", "440900"));
+            mHotCities.add(new HotCity("天津", "天津", "120100"));
+            mHotCities.add(new HotCity("杭州", "浙江", "330100"));
+            mHotCities.add(new HotCity("南京", "江苏", "320100"));
+            mHotCities.add(new HotCity("成都", "四川", "510100"));
+            mHotCities.add(new HotCity("武汉", "湖北", "420100"));
         }
     }
 
